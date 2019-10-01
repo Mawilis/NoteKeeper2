@@ -9,10 +9,10 @@ import com.wk.wilsy.notekeeper.NoteKeeperDatabaseContract.NoteInfoEntry;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Created by Wilsy.
  */
-
 public class DataManager {
     private static DataManager ourInstance = null;
 
@@ -20,7 +20,7 @@ public class DataManager {
     private List<NoteInfo> mNotes = new ArrayList<>();
 
     public static DataManager getInstance() {
-        if(ourInstance == null) {
+        if (ourInstance == null) {
             ourInstance = new DataManager();
 //            ourInstance.initializeCourses();
 //            ourInstance.initializeExampleNotes();
@@ -40,27 +40,33 @@ public class DataManager {
         final String[] noteColumns = {
                 NoteInfoEntry.COLUMN_NOTE_TITLE,
                 NoteInfoEntry.COLUMN_NOTE_TEXT,
-                NoteInfoEntry.COLUMN_COURSE_ID};
-        String noteOrderBy = NoteInfoEntry.COLUMN_COURSE_ID + "," + NoteInfoEntry.COLUMN_NOTE_TITLE;
-        final Cursor noteCursor = db.query(NoteInfoEntry.TABLE_NAME, noteColumns,
-                null, null, null, null, noteOrderBy);
-        loadNotesFromDatabase(noteCursor);
-    }
+                NoteInfoEntry.COLUMN_COURSE_ID,
+                NoteInfoEntry._ID};
+
+    String noteOrderBy = NoteInfoEntry.COLUMN_COURSE_ID + "," + NoteInfoEntry.COLUMN_NOTE_TITLE;
+    final Cursor noteCursor = db.query(NoteInfoEntry.TABLE_NAME, noteColumns,
+            null, null, null, null, noteOrderBy);
+
+    loadNotesFromDatabase(noteCursor);
+
+}
 
     private static void loadNotesFromDatabase(Cursor cursor) {
         int noteTitlePos = cursor.getColumnIndex(NoteInfoEntry.COLUMN_NOTE_TITLE);
         int noteTextPos = cursor.getColumnIndex(NoteInfoEntry.COLUMN_NOTE_TEXT);
         int courseIdPos = cursor.getColumnIndex(NoteInfoEntry.COLUMN_COURSE_ID);
+        int idPos = cursor.getColumnIndex(NoteInfoEntry._ID);
 
         DataManager dm = getInstance();
         dm.mNotes.clear();
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             String noteTitle = cursor.getString(noteTitlePos);
             String noteText = cursor.getString(noteTextPos);
             String courseId = cursor.getString(courseIdPos);
+            int id = cursor.getInt(idPos);
 
             CourseInfo noteCourse = dm.getCourse(courseId);
-            NoteInfo note = new NoteInfo(noteCourse, noteTitle, noteText);
+            NoteInfo note = new NoteInfo(id, noteCourse, noteTitle, noteText);
             dm.mNotes.add(note);
         }
         cursor.close();
@@ -72,7 +78,7 @@ public class DataManager {
 
         DataManager dm = getInstance();
         dm.mCourses.clear();
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             String courseId = cursor.getString(courseIdPos);
             String courseTitle = cursor.getString(courseTitlePos);
             CourseInfo course = new CourseInfo(courseId, courseTitle, null);
@@ -101,8 +107,8 @@ public class DataManager {
     }
 
     public int findNote(NoteInfo note) {
-        for(int index = 0; index < mNotes.size(); index++) {
-            if(note.equals(mNotes.get(index)))
+        for (int index = 0; index < mNotes.size(); index++) {
+            if (note.equals(mNotes.get(index)))
                 return index;
         }
 
@@ -127,8 +133,8 @@ public class DataManager {
 
     public List<NoteInfo> getNotes(CourseInfo course) {
         ArrayList<NoteInfo> notes = new ArrayList<>();
-        for(NoteInfo note:mNotes) {
-            if(course.equals(note.getCourse()))
+        for (NoteInfo note : mNotes) {
+            if (course.equals(note.getCourse()))
                 notes.add(note);
         }
         return notes;
@@ -136,8 +142,8 @@ public class DataManager {
 
     public int getNoteCount(CourseInfo course) {
         int count = 0;
-        for(NoteInfo note:mNotes) {
-            if(course.equals(note.getCourse()))
+        for (NoteInfo note : mNotes) {
+            if (course.equals(note.getCourse()))
                 count++;
         }
         return count;
@@ -266,4 +272,3 @@ public class DataManager {
     //endregion
 
 }
-

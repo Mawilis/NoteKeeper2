@@ -16,7 +16,6 @@ import java.util.List;
 /**
  * Created by Wilsy.
  */
-
 public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAdapter.ViewHolder> {
 
     private final Context mContext;
@@ -54,7 +53,7 @@ public class CourseRecyclerAdapter extends RecyclerView.Adapter<CourseRecyclerAd
 
         public ViewHolder(View itemView) {
             super(itemView);
-            mTextCourse = itemView.findViewById(R.id.text_course);
+            mTextCourse = (TextView) itemView.findViewById(R.id.text_course);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by Jim.
+ * Created Wilsy.
  */
 public class DataManagerTest {
     static DataManager sDataManager;
