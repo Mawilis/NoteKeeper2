@@ -2,17 +2,17 @@ package com.wk.wilsy.notekeeper;
 
 import android.content.Context;
 import android.content.Intent;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.database.Cursor;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.wk.wilsy.notekeeper.NoteKeeperDatabaseContract.NoteInfoEntry;
 
-import java.util.List;
+import static com.wk.wilsy.notekeeper.NoteKeeperDatabaseContract.CourseInfoEntry;
 
 /**
  * Created by Wilsy.
@@ -36,12 +36,13 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
     private void populateColumnPositions() {
         if (mCursor == null)
             return;
-        //Get column indexes from mCursor
-        mCoursePos = mCursor.getColumnIndex(NoteInfoEntry.COLUMN_COURSE_ID);
+        // Get column indexes from mCursor
+        mCoursePos = mCursor.getColumnIndex(CourseInfoEntry.COLUMN_COURSE_TITLE);
         mNoteTitlePos = mCursor.getColumnIndex(NoteInfoEntry.COLUMN_NOTE_TITLE);
         mIdPos = mCursor.getColumnIndex(NoteInfoEntry._ID);
     }
-    public void changeCursor(Cursor cursor){
+
+    public void changeCursor(Cursor cursor) {
         if (mCursor != null)
             mCursor.close();
         mCursor = cursor;
@@ -66,6 +67,7 @@ public class NoteRecyclerAdapter extends RecyclerView.Adapter<NoteRecyclerAdapte
         holder.mTextTitle.setText(noteTitle);
         holder.mId = id;
     }
+
     @Override
     public int getItemCount() {
         return mCursor == null ? 0 : mCursor.getCount();

@@ -13,6 +13,7 @@ import android.view.View;
 
 import java.util.List;
 
+
 public class NoteListActivity extends AppCompatActivity {
     private NoteRecyclerAdapter mNoteRecyclerAdapter;
 

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by Wilsy.
  */
+
 public final class NoteInfo implements Parcelable {
     private CourseInfo mCourse;
     private String mTitle;

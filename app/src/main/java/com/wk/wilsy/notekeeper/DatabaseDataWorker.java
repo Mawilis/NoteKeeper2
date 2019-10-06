@@ -6,7 +6,8 @@ import android.database.sqlite.SQLiteDatabase;
 /**
  * Created by Wilsy.
  */
-public class DatabaseDataWorker {
+
+ public class DatabaseDataWorker {
     private SQLiteDatabase mDb;
 
     public DatabaseDataWorker(SQLiteDatabase db) {
